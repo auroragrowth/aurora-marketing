@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* Aurora marketing — matches the dashboard's dark cyan/violet palette so a
+   visitor who signs in instantly recognises the same product. CSS variables
+   here are referenced by both Tailwind classes (via theme()) and plain
+   inline styles in section components. */
+:root {
+  --bg-deep:     #020617;
+  --bg-base:     #03122b;
+  --bg-card:     #081429;
+  --bg-hover:    rgba(255, 255, 255, 0.04);
+  --border:      rgba(255, 255, 255, 0.08);
+  --border-cyan: rgba(34, 211, 238, 0.18);
+  --text-1:      #ffffff;
+  --text-2:      rgba(255, 255, 255, 0.72);
+  --text-3:      rgba(255, 255, 255, 0.45);
+  --accent-cyan:    #22d3ee;
+  --accent-violet:  #a78bfa;
+  --accent-amber:   #fbbf24;
+  --accent-emerald: #34d399;
+  --accent-rose:    #fb7185;
+}
+
+html, body {
+  background: var(--bg-deep);
+  color: var(--text-1);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scroll for the homepage anchor nav (How it works, Pricing, etc.) */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* offset for the sticky header */
+}
+
+/* Standard Aurora gradient used on primary CTAs across the dashboard. */
+.btn-aurora {
+  background: linear-gradient(90deg, #06b6d4, #6366f1);
+  color: #fff;
+  font-weight: 700;
+}
+.btn-aurora:hover { filter: brightness(1.1); }
