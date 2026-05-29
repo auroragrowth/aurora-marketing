@@ -106,6 +106,12 @@ html {
   will-change: transform, opacity;
   mix-blend-mode: screen;
 }
+/* Larger blur + softer mix for the ambient (page-level) variant —
+   makes the borealis feel like a far-off glow rather than a wash. */
+.aurora-ambient .aurora-layer {
+  filter: blur(120px);
+  mix-blend-mode: plus-lighter;
+}
 .aurora-a {
   background:
     radial-gradient(40% 60% at 30% 40%, rgba(34,211,238,0.55) 0%, transparent 65%),
@@ -141,16 +147,63 @@ html {
   animation-delay: -22s;
 }
 
-/* Ambient (page-level) variant — the borealis runs continuously
-   behind everything at a very low opacity, like the night sky.
-   The body element gets this so it scrolls with the page. */
+/* Ambient (page-level) variant — kept VERY subtle, like a faint
+   borealis glow at the horizon rather than overhead. The fixed
+   layer scrolls with the viewport. */
 .aurora-ambient {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.18;
+}
+
+/* ============================================================
+   Floating brand-coloured particles
+   Small SVG dots that drift slowly up the viewport. Adds a sense
+   of life without colour-washing the page. Particle motion is
+   driven by per-class @keyframes so each particle has a slightly
+   different path and timing.
+   ============================================================ */
+@keyframes particle-drift-1 {
+  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translate3d(20px, -120vh, 0) scale(1.2); opacity: 0; }
+}
+@keyframes particle-drift-2 {
+  0%   { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0; }
+  15%  { opacity: 0.45; }
+  85%  { opacity: 0.45; }
+  100% { transform: translate3d(-30px, -120vh, 0) scale(1.1); opacity: 0; }
+}
+@keyframes particle-drift-3 {
+  0%   { transform: translate3d(0, 0, 0) scale(1.1); opacity: 0; }
+  20%  { opacity: 0.5; }
+  80%  { opacity: 0.5; }
+  100% { transform: translate3d(15px, -120vh, 0) scale(1.3); opacity: 0; }
+}
+
+.particles-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.particle {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(1px);
+  will-change: transform, opacity;
+}
+.particle-1 { animation: particle-drift-1 28s linear infinite; }
+.particle-2 { animation: particle-drift-2 36s linear infinite; }
+.particle-3 { animation: particle-drift-3 44s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .particle { animation: none; opacity: 0.35 !important; }
 }
 
 /* Reduced-motion users get a static composite of the same colours —

@@ -1,8 +1,7 @@
 import Link from "next/link";
-import AuroraBackdrop from "@/components/AuroraBackdrop";
 import BalancedPortfolioVisual from "@/components/BalancedPortfolioVisual";
 import CompoundCalculator from "@/components/CompoundCalculator";
-import DashboardMockups from "@/components/DashboardMockups";
+import FullDashboardTour from "@/components/FullDashboardTour";
 
 const SIGNUP_URL = "https://app.auroragrowth.co.uk/signup";
 // Unauthenticated visitors hit /signup, not /upgrade — /upgrade requires
@@ -33,9 +32,18 @@ export default function HomePage() {
 function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Live aurora-borealis backdrop — flowing cyan/pink/violet
-          curtains that drift slowly behind the headline. */}
-      <AuroraBackdrop intensity="hero" />
+      {/* Subtle headline glow — a single soft radial in the brand
+          gradient, sitting above the global ambient backdrop. Kept
+          deliberately gentle so it complements the floating particles
+          rather than competing with them. */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[90%] pointer-events-none -z-10"
+        style={{
+          background:
+            "radial-gradient(60% 60% at 50% 30%, rgba(34,211,238,0.10) 0%, rgba(236,72,153,0.06) 45%, rgba(2,6,23,0) 75%)",
+        }}
+      />
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
         <p
           className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] mb-6"
@@ -210,101 +218,20 @@ function Platform() {
     >
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="Inside the dashboard"
+          eyebrow="Take the tour"
           title={
             <>
-              Here's what <span className="aurora-text">structure</span> looks like
+              Three views, one <span className="aurora-text">focused</span> workflow
             </>
           }
-          subtitle="Three signature views from the Aurora dashboard. Built dark, focused, and designed so weekly check-ins are enough."
+          subtitle="The Aurora dashboard is built around weekly check-ins, not daily refreshing. Here's how the main screens work."
         />
 
-        {/* Hero mock-ups — visual peek at the product. */}
-        <div className="mt-12">
-          <DashboardMockups />
-        </div>
-
-        {/* Supporting feature grid below the mock-ups. */}
-        <div className="mt-12 grid lg:grid-cols-2 gap-6">
-          <FeatureCard
-            title="Cross-device Watchlist"
-            body="Track the stocks you've vetted. Notes, scores, ladder progress — all synced across devices."
-            bullet={[
-              "Aurora score 0–100 on every name",
-              "Group by sector or strategy",
-              "Quick-add from search anywhere on the site",
-            ]}
-          />
-          <FeatureCard
-            title="Blue Aurora ladders"
-            body="Pre-plan staggered buy levels so falling prices become opportunities, not panic."
-            bullet={[
-              "Define ladders per stock",
-              "Track which rungs have filled",
-              "Profit ladder for invested positions",
-            ]}
-          />
-          <FeatureCard
-            title="Compound calculator"
-            body="Model contributions, returns and timeframes. See what consistency actually does over decades."
-            bullet={[
-              "Adjust monthly contribution",
-              "Tweak return and horizon",
-              "Visualise growth vs contributions",
-            ]}
-          />
-          <FeatureCard
-            title="Trading 212 connection"
-            body="Optional integration with Trading 212 — pull live positions and portfolio metrics into the dashboard."
-            bullet={[
-              "Paper or live mode",
-              "Encrypted API credentials",
-              "Read-only by default",
-            ]}
-          />
+        <div className="mt-16">
+          <FullDashboardTour />
         </div>
       </div>
     </section>
-  );
-}
-
-function FeatureCard({
-  title,
-  body,
-  bullet,
-}: {
-  title: string;
-  body: string;
-  bullet: string[];
-}) {
-  return (
-    <div
-      className="rounded-2xl p-7 border"
-      style={{
-        background: "var(--bg-card)",
-        borderColor: "var(--border)",
-      }}
-    >
-      <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-      <p
-        className="text-sm leading-relaxed mb-4"
-        style={{ color: "var(--text-2)" }}
-      >
-        {body}
-      </p>
-      <ul className="space-y-1.5 text-sm" style={{ color: "var(--text-2)" }}>
-        {bullet.map((b) => (
-          <li key={b} className="flex items-start gap-2">
-            <span
-              className="mt-1 inline-block h-1.5 w-1.5 rounded-full"
-              style={{ background: "var(--accent-cyan)" }}
-              aria-hidden
-            />
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }
 
@@ -552,18 +479,86 @@ function ManualAutoSection() {
               className="text-sm leading-relaxed mb-4"
               style={{ color: "var(--text-2)" }}
             >
-              Connect your Trading 212 account to pull live positions into
-              Aurora. You still place every trade — Aurora just gives you
-              the live picture next to your plan.
+              Connect your Trading 212 account in either{" "}
+              <strong style={{ color: "#fff" }}>Demo</strong> or{" "}
+              <strong style={{ color: "#fff" }}>Live</strong> mode and Aurora
+              pulls your positions, cash and P&amp;L into the dashboard. You
+              still place every trade — Aurora gives you the live picture
+              next to your plan.
             </p>
             <ul
               className="space-y-2 text-sm"
               style={{ color: "var(--text-2)" }}
             >
-              <li>• Live portfolio sync</li>
-              <li>• Paper or live mode</li>
-              <li>• API credentials encrypted at rest</li>
+              <li>
+                • <strong style={{ color: "#fff" }}>Demo account</strong>{" "}
+                — practise the system with virtual money before going live
+              </li>
+              <li>
+                • <strong style={{ color: "#fff" }}>Live account</strong>{" "}
+                — same workflow, real positions, separate API key
+              </li>
+              <li>• API credentials encrypted at rest (AES-256)</li>
+              <li>• Read-only by default — Aurora never places orders for you</li>
             </ul>
+          </div>
+        </div>
+
+        {/* Telegram alerts feature strip — sits below the two workflow
+            cards because both manual and assisted users benefit from it. */}
+        <div
+          className="mt-6 rounded-2xl p-6 border flex flex-col sm:flex-row sm:items-center gap-5"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(34,211,238,0.05) 0%, rgba(236,72,153,0.04) 50%, rgba(167,139,250,0.05) 100%)",
+            borderColor: "rgba(34,211,238,0.20)",
+          }}
+        >
+          {/* Logo-style icon for Telegram (paper-plane chevron in cyan).
+              Inline SVG so it inherits the brand palette without any
+              icon-library dependency. */}
+          <div
+            className="shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(34,211,238,0.25), rgba(167,139,250,0.25))",
+              border: "1px solid rgba(34,211,238,0.35)",
+            }}
+            aria-hidden
+          >
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#22d3ee"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 2L11 13" />
+              <path d="M22 2l-7 20-4-9-9-4 20-7z" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <p
+              className="text-[11px] font-bold uppercase tracking-[0.18em] mb-1"
+              style={{ color: "var(--accent-cyan)" }}
+            >
+              Telegram alerts
+            </p>
+            <h3 className="text-white font-bold text-lg mb-1.5">
+              Aurora pings you the moment something matters
+            </h3>
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: "var(--text-2)" }}
+            >
+              Link your Telegram in one tap and Aurora will send you a
+              message when a ladder rung is hit, an Aurora score changes
+              materially, or your watchlist needs attention. No daily-noise
+              digests — just the events you actually need to know about.
+            </p>
           </div>
         </div>
       </div>
