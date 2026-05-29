@@ -14,19 +14,30 @@
   --text-1:      #ffffff;
   --text-2:      rgba(255, 255, 255, 0.72);
   --text-3:      rgba(255, 255, 255, 0.45);
+  /* Logo palette, ordered as it appears across the wordmark from
+     left to right — cyan → coral → magenta → violet. Every accent
+     in the site should pull from one of these. */
   --accent-cyan:    #22d3ee;
+  --accent-coral:   #fb923c;
+  --accent-pink:    #ec4899;
   --accent-violet:  #a78bfa;
   --accent-amber:   #fbbf24;
   --accent-emerald: #34d399;
   --accent-rose:    #fb7185;
 }
 
-html, body {
+/* The deep-space background sits on <html> only. <body> stays
+   transparent so the fixed .aurora-ambient layer (z-index: -1) is
+   actually visible — a solid body background would otherwise cover it. */
+html {
   background: var(--bg-deep);
   color: var(--text-1);
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background: transparent;
 }
 
 /* Smooth scroll for the homepage anchor nav (How it works, Pricing, etc.) */
@@ -36,10 +47,17 @@ html {
 }
 
 /* Standard Aurora gradient used on primary CTAs across the dashboard.
-   Updated to span the full logo palette: cyan → pink → violet, so the
-   buttons echo the wordmark sitting in the header. */
+   Spans the full four-colour logo palette: cyan → coral → pink → violet.
+   Background is over-sized and shifts on hover so the gradient appears
+   to flow through the button. */
 .btn-aurora {
-  background: linear-gradient(90deg, #06b6d4 0%, #ec4899 55%, #6366f1 100%);
+  background: linear-gradient(
+    90deg,
+    #22d3ee 0%,
+    #fb923c 38%,
+    #ec4899 65%,
+    #a78bfa 100%
+  );
   background-size: 200% 100%;
   background-position: 0% 50%;
   color: #fff;
@@ -97,7 +115,7 @@ html {
 .aurora-b {
   background:
     radial-gradient(45% 55% at 60% 50%, rgba(236,72,153,0.45) 0%, transparent 70%),
-    radial-gradient(40% 45% at 25% 65%, rgba(52,211,153,0.40) 0%, transparent 70%);
+    radial-gradient(40% 45% at 25% 65%, rgba(251,146,60,0.32) 0%, transparent 70%);
   animation: aurora-drift-b 34s ease-in-out infinite;
   animation-delay: -8s;
 }
@@ -108,11 +126,37 @@ html {
   animation: aurora-drift-c 42s ease-in-out infinite;
   animation-delay: -16s;
 }
+/* Fourth slow-drifting layer, primarily coral/amber — fills in the
+   warm middle of the logo gradient that the first three layers miss. */
+@keyframes aurora-drift-d {
+  0%   { transform: translate3d( -6%, 12%, 0) rotate( 3deg) scale(1.18); opacity: 0.45; }
+  50%  { transform: translate3d(  8%, -2%, 0) rotate(-4deg) scale(1.32); opacity: 0.75; }
+  100% { transform: translate3d( -6%, 12%, 0) rotate( 3deg) scale(1.18); opacity: 0.45; }
+}
+.aurora-d {
+  background:
+    radial-gradient(38% 45% at 35% 55%, rgba(251,146,60,0.32) 0%, transparent 70%),
+    radial-gradient(30% 40% at 75% 45%, rgba(251,191,36,0.22) 0%, transparent 70%);
+  animation: aurora-drift-d 50s ease-in-out infinite;
+  animation-delay: -22s;
+}
+
+/* Ambient (page-level) variant — the borealis runs continuously
+   behind everything at a very low opacity, like the night sky.
+   The body element gets this so it scrolls with the page. */
+.aurora-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.55;
+}
 
 /* Reduced-motion users get a static composite of the same colours —
    we keep the borealis colour story but stop the drifting. */
 @media (prefers-reduced-motion: reduce) {
-  .aurora-a, .aurora-b, .aurora-c {
+  .aurora-a, .aurora-b, .aurora-c, .aurora-d {
     animation: none;
   }
 }
@@ -120,7 +164,13 @@ html {
 /* Gradient text helper — used on accent words in headings so the
    aurora palette runs through the typography too. */
 .aurora-text {
-  background: linear-gradient(90deg, #22d3ee 0%, #ec4899 50%, #a78bfa 100%);
+  background: linear-gradient(
+    90deg,
+    #22d3ee 0%,
+    #fb923c 35%,
+    #ec4899 65%,
+    #a78bfa 100%
+  );
   -webkit-background-clip: text;
           background-clip: text;
   -webkit-text-fill-color: transparent;

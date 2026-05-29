@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
+import AuroraBackdrop from "@/components/AuroraBackdrop";
 import FCAFooter from "@/components/FCAFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -29,6 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en-GB">
       <body className="min-h-screen flex flex-col">
+        {/* Site-wide subtle aurora drift — sits behind every route,
+            fixed to the viewport so it stays visible while scrolling. */}
+        <AuroraBackdrop intensity="ambient" />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <FCAFooter />

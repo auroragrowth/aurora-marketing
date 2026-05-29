@@ -10,6 +10,7 @@ import { useState } from "react";
 const NAV_LINKS = [
   { href: "/#how-it-works", label: "How it works" },
   { href: "/#platform", label: "Platform" },
+  { href: "/#balanced-portfolio", label: "Portfolio" },
   { href: "/#calculator", label: "ISA Calculator" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/starter-guide", label: "Starter Guide" },

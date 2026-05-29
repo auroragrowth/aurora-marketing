@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AuroraBackdrop from "@/components/AuroraBackdrop";
+import BalancedPortfolioVisual from "@/components/BalancedPortfolioVisual";
 import CompoundCalculator from "@/components/CompoundCalculator";
 import DashboardMockups from "@/components/DashboardMockups";
 
@@ -18,6 +19,7 @@ export default function HomePage() {
       <ProblemSolution />
       <Platform />
       <ISASection />
+      <BalancedPortfolioSection />
       <ManualAutoSection />
       <CalculatorSection />
       <Pricing />
@@ -206,8 +208,6 @@ function Platform() {
       className="relative py-20 border-t overflow-hidden"
       style={{ borderColor: "var(--border)" }}
     >
-      {/* Soft aurora wash so the section glows from its centre. */}
-      <AuroraBackdrop intensity="section" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Inside the dashboard"
@@ -389,6 +389,111 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
+/* ---------- Balanced portfolio ---------- */
+
+function BalancedPortfolioSection() {
+  return (
+    <section
+      id="balanced-portfolio"
+      className="relative py-20 border-t overflow-hidden"
+      style={{ borderColor: "var(--border)" }}
+    >
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          eyebrow="Balanced portfolio"
+          title={
+            <>
+              Diversification is the <span className="aurora-text">first risk control</span>
+            </>
+          }
+          subtitle="Aurora's structure pushes you toward a balanced shape: enough exposure across sectors that no single bad call ruins the year, but concentrated enough that the winners actually move the needle."
+        />
+
+        <div className="mt-12">
+          <BalancedPortfolioVisual />
+        </div>
+
+        {/* Three principles below the visual — short, practical, no
+            return promises. The middle card uses coral/orange as its
+            accent to anchor the palette point. */}
+        <div className="mt-12 grid md:grid-cols-3 gap-5">
+          <PrincipleCard
+            n="01"
+            accent="#22d3ee"
+            wash="rgba(34,211,238,0.06)"
+            border="rgba(34,211,238,0.22)"
+            title="Spread across sectors"
+            body="Pick stocks whose drivers don't all move together. Tech, consumer, healthcare and finance respond to different cycles — that's what makes the basket steadier."
+          />
+          <PrincipleCard
+            n="02"
+            accent="#fb923c"
+            wash="rgba(251,146,60,0.07)"
+            border="rgba(251,146,60,0.28)"
+            title="Cap the biggest position"
+            body="No single name above ~25–30% of the portfolio. Aurora's ladder system makes this natural — you size each position before the prices ever move."
+          />
+          <PrincipleCard
+            n="03"
+            accent="#a78bfa"
+            wash="rgba(167,139,250,0.06)"
+            border="rgba(167,139,250,0.25)"
+            title="Keep cash as a tool"
+            body="A small cash buffer is a feature, not lazy investing. It funds the lower rungs of every ladder if markets drop, which is when planned buying matters most."
+          />
+        </div>
+
+        <p
+          className="mt-8 text-xs text-center max-w-3xl mx-auto leading-relaxed"
+          style={{ color: "var(--text-3)" }}
+        >
+          Sample allocations shown are illustrative only. Diversification
+          reduces idiosyncratic risk but does not eliminate market risk and
+          does not guarantee a positive outcome. Aurora does not recommend
+          specific holdings.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function PrincipleCard({
+  n,
+  accent,
+  wash,
+  border,
+  title,
+  body,
+}: {
+  n: string;
+  accent: string;
+  wash: string;
+  border: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div
+      className="rounded-2xl p-6 border"
+      style={{
+        background: `linear-gradient(180deg, ${wash} 0%, rgba(2,6,23,0) 100%)`,
+        borderColor: border,
+      }}
+    >
+      <p className="text-xs font-bold mb-3" style={{ color: accent }}>
+        {n}
+      </p>
+      <h3 className="text-white font-bold mb-2">{title}</h3>
+      <p
+        className="text-sm leading-relaxed"
+        style={{ color: "var(--text-2)" }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
 /* ---------- Manual or Auto ---------- */
 
 function ManualAutoSection() {
@@ -557,7 +662,6 @@ function Pricing() {
       className="relative py-20 border-t overflow-hidden"
       style={{ borderColor: "var(--border)" }}
     >
-      <AuroraBackdrop intensity="section" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Pricing"
@@ -664,7 +768,6 @@ function Pricing() {
 function CTA() {
   return (
     <section className="relative py-20 overflow-hidden">
-      <AuroraBackdrop intensity="hero" />
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
           Build the habit. <span className="aurora-text">Trust the process.</span>

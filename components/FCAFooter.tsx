@@ -53,6 +53,11 @@ export default function FCAFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/#balanced-portfolio" style={{ color: "var(--text-2)" }}>
+                  Balanced portfolio
+                </Link>
+              </li>
+              <li>
                 <Link href="/#calculator" style={{ color: "var(--text-2)" }}>
                   ISA calculator
                 </Link>
