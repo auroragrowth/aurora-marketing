@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -30,12 +31,16 @@ export default function SiteHeader() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 text-white">
-            <span className="text-cyan-300 text-lg" aria-hidden>
-              ✦
-            </span>
-            <span className="font-bold tracking-tight">Aurora Growth Academy</span>
+          {/* Logo — full Aurora wordmark + mountain mark */}
+          <Link href="/" className="flex items-center" aria-label="Aurora Growth Academy">
+            <Image
+              src="/aurora-logo.png"
+              alt="Aurora Growth Academy"
+              width={1463}
+              height={540}
+              priority
+              className="h-9 w-auto sm:h-10"
+            />
           </Link>
 
           {/* Desktop nav */}

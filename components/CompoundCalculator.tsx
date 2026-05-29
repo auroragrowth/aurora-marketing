@@ -36,9 +36,20 @@ function project(
   return points;
 }
 
+// Preset chips so users have anchor points instead of guessing what
+// number to type. "Aim" is intentionally a lower-prominence option than
+// the historical S&P benchmark so the page doesn't *lead* with a high
+// number — visitors have to choose to drag it up.
+const RATE_PRESETS = [
+  { value: 5, label: "Cautious", sub: "≈ Cash ISA + inflation" },
+  { value: 10, label: "Historic S&P", sub: "long-run average" },
+  { value: 20, label: "Ambitious", sub: "well above market" },
+  { value: 50, label: "Aim", sub: "illustrative target" },
+];
+
 export default function CompoundCalculator() {
   const [monthly, setMonthly] = useState(200);
-  const [rate, setRate] = useState(7);
+  const [rate, setRate] = useState(10);
   const [years, setYears] = useState(30);
   const [starting, setStarting] = useState(0);
 
@@ -156,12 +167,47 @@ export default function CompoundCalculator() {
             <input
               type="range"
               min={1}
-              max={15}
+              max={60}
               step={0.5}
               value={rate}
               onChange={(e) => setRate(+e.target.value)}
-              className="w-full accent-violet-400"
+              className="w-full accent-pink-400"
             />
+            {/* Preset chips — anchor users with realistic reference
+                points before they decide where to drag the slider. */}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {RATE_PRESETS.map((p) => {
+                const active = Math.abs(rate - p.value) < 0.01;
+                return (
+                  <button
+                    key={p.value}
+                    type="button"
+                    onClick={() => setRate(p.value)}
+                    className="rounded-full px-3 py-1 text-[11px] font-semibold border transition"
+                    style={{
+                      background: active
+                        ? "linear-gradient(90deg, rgba(34,211,238,0.2), rgba(236,72,153,0.2))"
+                        : "transparent",
+                      borderColor: active
+                        ? "var(--accent-cyan)"
+                        : "var(--border)",
+                      color: active ? "#fff" : "var(--text-2)",
+                    }}
+                    title={p.sub}
+                  >
+                    {p.value}% · {p.label}
+                  </button>
+                );
+              })}
+            </div>
+            <p
+              className="mt-2 text-[11px] leading-relaxed"
+              style={{ color: "var(--text-3)" }}
+            >
+              For reference: long-run S&amp;P 500 ≈ 10% p.a., Warren Buffett's
+              lifetime ≈ 20%. Sustained returns above 20% are very rare and
+              are not implied or promised by Aurora.
+            </p>
           </div>
 
           <div>
@@ -208,7 +254,7 @@ export default function CompoundCalculator() {
               className="text-4xl font-extrabold"
               style={{
                 background:
-                  "linear-gradient(90deg,#22d3ee 0%,#a78bfa 100%)",
+                  "linear-gradient(90deg,#22d3ee 0%,#ec4899 55%,#a78bfa 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
@@ -250,8 +296,14 @@ export default function CompoundCalculator() {
             >
               <defs>
                 <linearGradient id="agFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.35" />
+                  <stop offset="0%" stopColor="#ec4899" stopOpacity="0.35" />
+                  <stop offset="50%" stopColor="#a78bfa" stopOpacity="0.18" />
                   <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="agStroke" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="55%" stopColor="#ec4899" />
+                  <stop offset="100%" stopColor="#a78bfa" />
                 </linearGradient>
               </defs>
               {/* y-axis grid lines */}
@@ -279,7 +331,7 @@ export default function CompoundCalculator() {
               <path
                 d={balPath}
                 fill="none"
-                stroke="#22d3ee"
+                stroke="url(#agStroke)"
                 strokeWidth={2.5}
               />
               {/* x-axis labels */}
@@ -315,7 +367,13 @@ export default function CompoundCalculator() {
               style={{ color: "var(--text-3)" }}
             >
               <span className="flex items-center gap-2">
-                <span className="inline-block w-3 h-0.5 bg-cyan-400" />
+                <span
+                  className="inline-block w-3 h-0.5"
+                  style={{
+                    background:
+                      "linear-gradient(90deg,#22d3ee,#ec4899,#a78bfa)",
+                  }}
+                />
                 Projected balance
               </span>
               <span className="flex items-center gap-2">

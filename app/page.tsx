@@ -1,8 +1,15 @@
 import Link from "next/link";
+import AuroraBackdrop from "@/components/AuroraBackdrop";
 import CompoundCalculator from "@/components/CompoundCalculator";
+import DashboardMockups from "@/components/DashboardMockups";
 
 const SIGNUP_URL = "https://app.auroragrowth.co.uk/signup";
-const UPGRADE_URL = "https://app.auroragrowth.co.uk/upgrade";
+// Unauthenticated visitors hit /signup, not /upgrade — /upgrade requires
+// an active session, so it would bounce a marketing-site click to the
+// login page and the tier intent gets lost. Pass the tier as ?plan so
+// signup can pre-select or hand off to checkout once they're signed in.
+const signupForPlan = (plan: "core" | "pro" | "elite") =>
+  `${SIGNUP_URL}?plan=${plan}`;
 
 export default function HomePage() {
   return (
@@ -24,15 +31,9 @@ export default function HomePage() {
 function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Aurora glow background */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 0%, rgba(34,211,238,0.18) 0%, rgba(2,6,23,0) 60%), radial-gradient(40% 40% at 80% 30%, rgba(167,139,250,0.16) 0%, rgba(2,6,23,0) 60%)",
-        }}
-      />
+      {/* Live aurora-borealis backdrop — flowing cyan/pink/violet
+          curtains that drift slowly behind the headline. */}
+      <AuroraBackdrop intensity="hero" />
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
         <p
           className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] mb-6"
@@ -47,13 +48,7 @@ function Hero() {
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.1]">
           Most people don't lose money because of the market.
           <br />
-          <span
-            style={{
-              background: "linear-gradient(90deg,#22d3ee 0%,#a78bfa 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <span className="aurora-text">
             They lose because they don't have a process.
           </span>
         </h1>
@@ -151,30 +146,38 @@ function ProblemSolution() {
                 n: "01",
                 t: "Filter using Aurora screening rules",
                 d: "Stocks are scored on quality, growth and value. You only ever look at the names that pass.",
+                accent: "#22d3ee",
+                wash: "rgba(34,211,238,0.06)",
+                border: "rgba(34,211,238,0.22)",
               },
               {
                 n: "02",
                 t: "Plan entries with the Blue Aurora ladder",
                 d: "Pre-define buy zones at staggered prices. You're never left wondering 'should I buy here?'",
+                accent: "#ec4899",
+                wash: "rgba(236,72,153,0.06)",
+                border: "rgba(236,72,153,0.25)",
               },
               {
                 n: "03",
                 t: "Stay consistent with one dashboard",
                 d: "Watchlist, positions, calculator and ladders in one place — built so you check it weekly, not hourly.",
+                accent: "#a78bfa",
+                wash: "rgba(167,139,250,0.06)",
+                border: "rgba(167,139,250,0.25)",
               },
             ].map((c) => (
               <div
                 key={c.n}
                 className="rounded-2xl p-6 border"
                 style={{
-                  background:
-                    "linear-gradient(180deg, rgba(34,211,238,0.05) 0%, rgba(2,6,23,0) 100%)",
-                  borderColor: "var(--border-cyan)",
+                  background: `linear-gradient(180deg, ${c.wash} 0%, rgba(2,6,23,0) 100%)`,
+                  borderColor: c.border,
                 }}
               >
                 <p
                   className="text-xs font-bold mb-3"
-                  style={{ color: "var(--accent-cyan)" }}
+                  style={{ color: c.accent }}
                 >
                   {c.n}
                 </p>
@@ -200,16 +203,28 @@ function Platform() {
   return (
     <section
       id="platform"
-      className="py-20 border-t"
+      className="relative py-20 border-t overflow-hidden"
       style={{ borderColor: "var(--border)" }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Soft aurora wash so the section glows from its centre. */}
+      <AuroraBackdrop intensity="section" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          eyebrow="The platform"
-          title="Everything in one focused dashboard"
-          subtitle="No tabs to juggle, no five different tools. Just the workflow Aurora is built around."
+          eyebrow="Inside the dashboard"
+          title={
+            <>
+              Here's what <span className="aurora-text">structure</span> looks like
+            </>
+          }
+          subtitle="Three signature views from the Aurora dashboard. Built dark, focused, and designed so weekly check-ins are enough."
         />
 
+        {/* Hero mock-ups — visual peek at the product. */}
+        <div className="mt-12">
+          <DashboardMockups />
+        </div>
+
+        {/* Supporting feature grid below the mock-ups. */}
         <div className="mt-12 grid lg:grid-cols-2 gap-6">
           <FeatureCard
             title="Cross-device Watchlist"
@@ -298,10 +313,21 @@ function FeatureCard({
 function ISASection() {
   return (
     <section
-      className="py-20 border-t"
+      className="relative py-20 border-t overflow-hidden"
       style={{ borderColor: "var(--border)" }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      {/* Pink-leaning aurora wash — visually anchors the "UK investors"
+          eyebrow's violet accent. */}
+      <div
+        aria-hidden
+        className="absolute -top-1/4 -right-1/4 w-[60%] h-[120%] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(50% 50% at 50% 50%, rgba(236,72,153,0.18) 0%, rgba(2,6,23,0) 70%)",
+          filter: "blur(40px)",
+        }}
+      />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <p
             className="text-xs font-bold uppercase tracking-[0.18em] mb-3"
@@ -358,16 +384,7 @@ function Stat({ label, value }: { label: string; value: string }) {
       >
         {label}
       </p>
-      <p
-        className="text-2xl font-extrabold"
-        style={{
-          background: "linear-gradient(90deg,#22d3ee 0%,#a78bfa 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}
-      >
-        {value}
-      </p>
+      <p className="text-2xl font-extrabold aurora-text">{value}</p>
     </div>
   );
 }
@@ -475,6 +492,7 @@ function CalculatorSection() {
 /* ---------- Pricing ---------- */
 
 type Plan = {
+  slug: "core" | "pro" | "elite";
   name: string;
   tagline: string;
   monthly: string;
@@ -486,6 +504,7 @@ type Plan = {
 
 const PLANS: Plan[] = [
   {
+    slug: "core",
     name: "Core",
     tagline: "Start with the system",
     monthly: "£19.99",
@@ -499,6 +518,7 @@ const PLANS: Plan[] = [
     cta: "Start with Core",
   },
   {
+    slug: "pro",
     name: "Pro",
     tagline: "The full structured workflow",
     monthly: "£59",
@@ -514,6 +534,7 @@ const PLANS: Plan[] = [
     cta: "Get Pro",
   },
   {
+    slug: "elite",
     name: "Elite",
     tagline: "For serious, active investors",
     monthly: "£149",
@@ -533,10 +554,11 @@ function Pricing() {
   return (
     <section
       id="pricing"
-      className="py-20 border-t"
+      className="relative py-20 border-t overflow-hidden"
       style={{ borderColor: "var(--border)" }}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <AuroraBackdrop intensity="section" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Pricing"
           title="Pick the tier that fits how you invest"
@@ -549,10 +571,10 @@ function Pricing() {
               className="rounded-2xl p-7 border flex flex-col"
               style={{
                 background: p.highlight
-                  ? "linear-gradient(180deg, rgba(34,211,238,0.08) 0%, rgba(2,6,23,0) 100%)"
+                  ? "linear-gradient(180deg, rgba(236,72,153,0.10) 0%, rgba(167,139,250,0.05) 50%, rgba(2,6,23,0) 100%)"
                   : "var(--bg-card)",
                 borderColor: p.highlight
-                  ? "var(--border-cyan)"
+                  ? "rgba(236,72,153,0.30)"
                   : "var(--border)",
               }}
             >
@@ -560,8 +582,9 @@ function Pricing() {
                 <p
                   className="inline-flex self-start rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em] mb-3"
                   style={{
-                    background: "rgba(34,211,238,0.18)",
-                    color: "var(--accent-cyan)",
+                    background:
+                      "linear-gradient(90deg, rgba(34,211,238,0.18), rgba(236,72,153,0.25))",
+                    color: "#fff",
                   }}
                 >
                   Most popular
@@ -601,7 +624,7 @@ function Pricing() {
                       className="mt-1 inline-block h-1.5 w-1.5 rounded-full"
                       style={{
                         background: p.highlight
-                          ? "var(--accent-cyan)"
+                          ? "#f472b6"
                           : "var(--accent-violet)",
                       }}
                       aria-hidden
@@ -611,7 +634,7 @@ function Pricing() {
                 ))}
               </ul>
               <Link
-                href={UPGRADE_URL}
+                href={signupForPlan(p.slug)}
                 className={
                   p.highlight
                     ? "btn-aurora rounded-full px-4 py-2.5 text-sm text-center"
@@ -640,10 +663,11 @@ function Pricing() {
 
 function CTA() {
   return (
-    <section className="py-20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+    <section className="relative py-20 overflow-hidden">
+      <AuroraBackdrop intensity="hero" />
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Build the habit. Trust the process.
+          Build the habit. <span className="aurora-text">Trust the process.</span>
         </h2>
         <p
           className="mt-4 mx-auto max-w-2xl text-base leading-relaxed"
@@ -673,7 +697,7 @@ function SectionHeader({
   subtitle,
 }: {
   eyebrow: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
 }) {
   return (

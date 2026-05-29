@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 // Site-wide footer. Every page renders this. The disclaimer text is the
@@ -19,12 +20,15 @@ export default function FCAFooter() {
         {/* Top: brand + nav columns */}
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 text-white mb-3">
-              <span className="text-cyan-300 text-lg" aria-hidden>
-                ✦
-              </span>
-              <span className="font-bold">Aurora Growth Academy</span>
-            </div>
+            <Link href="/" aria-label="Aurora Growth Academy" className="inline-block mb-4">
+              <Image
+                src="/aurora-logo.png"
+                alt="Aurora Growth Academy"
+                width={1463}
+                height={540}
+                className="h-10 w-auto"
+              />
+            </Link>
             <p
               className="text-sm leading-relaxed max-w-md"
               style={{ color: "var(--text-3)" }}

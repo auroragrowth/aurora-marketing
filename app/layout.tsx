@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   description:
     "A structured investing system built to help you think more clearly, plan entries properly, and stay more consistent over time. Educational only — not financial advice.",
   metadataBase: new URL("https://auroragrowth.co.uk"),
+  icons: {
+    icon: "/favicon.png",
+  },
   openGraph: {
     title: "Aurora Growth Academy",
     description: "Structured investing — clarity, not guesswork.",
@@ -16,6 +19,7 @@ export const metadata: Metadata = {
     siteName: "Aurora Growth Academy",
     locale: "en_GB",
     type: "website",
+    images: ["/aurora-logo.png"],
   },
 };
 
