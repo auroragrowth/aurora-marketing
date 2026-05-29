@@ -40,7 +40,7 @@ export default function PrivacyPage() {
           and are not stored on our servers.
         </li>
         <li>
-          <strong>Platform data:</strong> watchlist items, ladder
+          <strong>Platform data:</strong> watchlist items, signal
           settings, notes, calculator inputs and other content you
           create on the Platform.
         </li>

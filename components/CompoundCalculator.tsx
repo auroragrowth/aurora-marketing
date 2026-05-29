@@ -302,7 +302,8 @@ export default function CompoundCalculator() {
                 </linearGradient>
                 <linearGradient id="agStroke" x1="0" x2="1" y1="0" y2="0">
                   <stop offset="0%" stopColor="#22d3ee" />
-                  <stop offset="55%" stopColor="#ec4899" />
+                  <stop offset="35%" stopColor="#3b82f6" />
+                  <stop offset="70%" stopColor="#ec4899" />
                   <stop offset="100%" stopColor="#a78bfa" />
                 </linearGradient>
               </defs>
@@ -371,7 +372,7 @@ export default function CompoundCalculator() {
                   className="inline-block w-3 h-0.5"
                   style={{
                     background:
-                      "linear-gradient(90deg,#22d3ee,#ec4899,#a78bfa)",
+                      "linear-gradient(90deg,#22d3ee,#3b82f6,#ec4899,#a78bfa)",
                   }}
                 />
                 Projected balance

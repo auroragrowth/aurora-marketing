@@ -20,9 +20,9 @@ export default function TermsPage() {
       <h2>1. The service</h2>
       <p>
         Aurora Growth Academy is an educational platform that provides
-        software tools — including screening rules, watchlists, ladders,
-        calculators and dashboards — to help individual investors plan
-        and review their own investing.
+        software tools — including screening rules, watchlists, signal
+        indicators, calculators and dashboards — to help individual
+        investors plan and review their own investing.
       </p>
       <p>
         We do not provide regulated financial advice, manage money, hold

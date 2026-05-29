@@ -20,7 +20,7 @@ export default function RiskWarningPage() {
       <h2>1. Not financial advice</h2>
       <p>
         Nothing on Aurora Growth Academy — including the dashboard,
-        scoring systems, ladders, articles, calculators, watchlist items
+        scoring systems, signals, articles, calculators, watchlist items
         and any communication — constitutes regulated financial advice,
         investment advice, tax advice, or a personal recommendation. All
         information is provided for educational purposes only and is

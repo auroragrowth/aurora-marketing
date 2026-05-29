@@ -14,16 +14,15 @@
   --text-1:      #ffffff;
   --text-2:      rgba(255, 255, 255, 0.72);
   --text-3:      rgba(255, 255, 255, 0.45);
-  /* Logo palette, ordered as it appears across the wordmark from
-     left to right — cyan → coral → magenta → violet. Every accent
-     in the site should pull from one of these. */
-  --accent-cyan:    #22d3ee;
-  --accent-coral:   #fb923c;
-  --accent-pink:    #ec4899;
-  --accent-violet:  #a78bfa;
-  --accent-amber:   #fbbf24;
-  --accent-emerald: #34d399;
-  --accent-rose:    #fb7185;
+  /* Logo palette, ordered as the gradient runs across the wordmark:
+     turquoise → blue → pink → purple. Every accent in the site should
+     pull from one of these four. */
+  --accent-cyan:    #22d3ee;  /* turquoise */
+  --accent-blue:    #3b82f6;  /* mid blue (in the wordmark) */
+  --accent-pink:    #ec4899;  /* magenta */
+  --accent-violet:  #a78bfa;  /* purple */
+  --accent-emerald: #34d399;  /* used only for "up" indicators */
+  --accent-rose:    #fb7185;  /* used only for "down" indicators */
 }
 
 /* The deep-space background sits on <html> only. <body> stays
@@ -46,16 +45,16 @@ html {
   scroll-padding-top: 80px; /* offset for the sticky header */
 }
 
-/* Standard Aurora gradient used on primary CTAs across the dashboard.
-   Spans the full four-colour logo palette: cyan → coral → pink → violet.
-   Background is over-sized and shifts on hover so the gradient appears
-   to flow through the button. */
+/* Standard Aurora gradient used on primary CTAs.
+   Four logo stops: turquoise → blue → pink → purple.
+   Background is over-sized and shifts on hover so the gradient flows
+   through the button instead of just colour-shifting in place. */
 .btn-aurora {
   background: linear-gradient(
     90deg,
     #22d3ee 0%,
-    #fb923c 38%,
-    #ec4899 65%,
+    #3b82f6 35%,
+    #ec4899 70%,
     #a78bfa 100%
   );
   background-size: 200% 100%;
@@ -65,7 +64,7 @@ html {
   transition: background-position 600ms ease, filter 200ms ease;
 }
 .btn-aurora:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.05);
   background-position: 100% 50%;
 }
 
@@ -112,51 +111,55 @@ html {
   filter: blur(120px);
   mix-blend-mode: plus-lighter;
 }
+/* Layer rgba alphas kept low (~0.3–0.4) so the borealis reads as a
+   gentle wash even at full intensity. The .aurora-ambient parent
+   then dials the whole thing down further via opacity. */
 .aurora-a {
   background:
-    radial-gradient(40% 60% at 30% 40%, rgba(34,211,238,0.55) 0%, transparent 65%),
-    radial-gradient(35% 50% at 70% 30%, rgba(167,139,250,0.50) 0%, transparent 70%);
+    radial-gradient(40% 60% at 30% 40%, rgba(34,211,238,0.35) 0%, transparent 65%),
+    radial-gradient(35% 50% at 70% 30%, rgba(167,139,250,0.32) 0%, transparent 70%);
   animation: aurora-drift-a 26s ease-in-out infinite;
 }
 .aurora-b {
   background:
-    radial-gradient(45% 55% at 60% 50%, rgba(236,72,153,0.45) 0%, transparent 70%),
-    radial-gradient(40% 45% at 25% 65%, rgba(251,146,60,0.32) 0%, transparent 70%);
+    radial-gradient(45% 55% at 60% 50%, rgba(236,72,153,0.28) 0%, transparent 70%),
+    radial-gradient(40% 45% at 25% 65%, rgba(59,130,246,0.30) 0%, transparent 70%);
   animation: aurora-drift-b 34s ease-in-out infinite;
   animation-delay: -8s;
 }
 .aurora-c {
   background:
-    radial-gradient(40% 50% at 50% 30%, rgba(99,102,241,0.50) 0%, transparent 70%),
-    radial-gradient(35% 40% at 80% 70%, rgba(34,211,238,0.35) 0%, transparent 70%);
+    radial-gradient(40% 50% at 50% 30%, rgba(59,130,246,0.30) 0%, transparent 70%),
+    radial-gradient(35% 40% at 80% 70%, rgba(34,211,238,0.25) 0%, transparent 70%);
   animation: aurora-drift-c 42s ease-in-out infinite;
   animation-delay: -16s;
 }
-/* Fourth slow-drifting layer, primarily coral/amber — fills in the
-   warm middle of the logo gradient that the first three layers miss. */
+/* Fourth slow-drifting layer — pink + purple, fills out the warmer
+   side of the logo gradient that the cyan/blue layers miss. */
 @keyframes aurora-drift-d {
-  0%   { transform: translate3d( -6%, 12%, 0) rotate( 3deg) scale(1.18); opacity: 0.45; }
-  50%  { transform: translate3d(  8%, -2%, 0) rotate(-4deg) scale(1.32); opacity: 0.75; }
-  100% { transform: translate3d( -6%, 12%, 0) rotate( 3deg) scale(1.18); opacity: 0.45; }
+  0%   { transform: translate3d( -6%, 12%, 0) rotate( 3deg) scale(1.18); opacity: 0.35; }
+  50%  { transform: translate3d(  8%, -2%, 0) rotate(-4deg) scale(1.32); opacity: 0.55; }
+  100% { transform: translate3d( -6%, 12%, 0) rotate( 3deg) scale(1.18); opacity: 0.35; }
 }
 .aurora-d {
   background:
-    radial-gradient(38% 45% at 35% 55%, rgba(251,146,60,0.32) 0%, transparent 70%),
-    radial-gradient(30% 40% at 75% 45%, rgba(251,191,36,0.22) 0%, transparent 70%);
+    radial-gradient(38% 45% at 35% 55%, rgba(236,72,153,0.20) 0%, transparent 70%),
+    radial-gradient(30% 40% at 75% 45%, rgba(167,139,250,0.22) 0%, transparent 70%);
   animation: aurora-drift-d 50s ease-in-out infinite;
   animation-delay: -22s;
 }
 
 /* Ambient (page-level) variant — kept VERY subtle, like a faint
    borealis glow at the horizon rather than overhead. The fixed
-   layer scrolls with the viewport. */
+   layer scrolls with the viewport. Opacity is intentionally low so
+   the colours are perceptible without competing with the content. */
 .aurora-ambient {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.18;
+  opacity: 0.10;
 }
 
 /* ============================================================
@@ -166,22 +169,24 @@ html {
    driven by per-class @keyframes so each particle has a slightly
    different path and timing.
    ============================================================ */
+/* Peak opacity kept low so the particles read as distant stars,
+   not foreground sparkles. */
 @keyframes particle-drift-1 {
   0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
-  10%  { opacity: 0.6; }
-  90%  { opacity: 0.6; }
+  10%  { opacity: 0.30; }
+  90%  { opacity: 0.30; }
   100% { transform: translate3d(20px, -120vh, 0) scale(1.2); opacity: 0; }
 }
 @keyframes particle-drift-2 {
   0%   { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0; }
-  15%  { opacity: 0.45; }
-  85%  { opacity: 0.45; }
+  15%  { opacity: 0.22; }
+  85%  { opacity: 0.22; }
   100% { transform: translate3d(-30px, -120vh, 0) scale(1.1); opacity: 0; }
 }
 @keyframes particle-drift-3 {
   0%   { transform: translate3d(0, 0, 0) scale(1.1); opacity: 0; }
-  20%  { opacity: 0.5; }
-  80%  { opacity: 0.5; }
+  20%  { opacity: 0.26; }
+  80%  { opacity: 0.26; }
   100% { transform: translate3d(15px, -120vh, 0) scale(1.3); opacity: 0; }
 }
 
@@ -220,8 +225,8 @@ html {
   background: linear-gradient(
     90deg,
     #22d3ee 0%,
-    #fb923c 35%,
-    #ec4899 65%,
+    #3b82f6 35%,
+    #ec4899 70%,
     #a78bfa 100%
   );
   -webkit-background-clip: text;

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Starter Guide — Aurora Growth Academy",
   description:
-    "How Aurora's structured investing system works: screening rules, Blue Aurora ladders, manual or assisted execution, and the case for consistency over timing.",
+    "How Aurora's structured investing system works: screening rules, the ready-to-invest signal calculated from the last peak, manual or assisted execution, and the case for consistency over timing.",
 };
 
 const SIGNUP_URL = "https://app.auroragrowth.co.uk/signup";
@@ -28,8 +28,8 @@ export default function StarterGuidePage() {
           style={{ color: "var(--text-2)" }}
         >
           A plain-English walkthrough of the system: why structure beats
-          guessing, how the ladder approach works, and how to plug Aurora
-          into your own investing.
+          guessing, how the ready-to-invest signal works, and how to plug
+          Aurora into your own investing.
         </p>
       </header>
 
@@ -79,31 +79,35 @@ export default function StarterGuidePage() {
               the filter — everything else stays out of view.
             </li>
             <li>
-              <strong>Plan.</strong> For each stock, you set a{" "}
-              <em>Blue Aurora ladder</em>: a series of staggered buy levels
-              below the current price. Each rung is a defined buy zone with
-              a defined amount.
+              <strong>Wait for the signal.</strong> For each stock on your
+              watchlist, Aurora calculates a ready-to-invest signal from the
+              last peak. When the signal turns on, the stock has pulled back
+              far enough to be worth a closer look. When it's off, you
+              wait.
             </li>
             <li>
-              <strong>Execute consistently.</strong> When price hits a rung,
-              you act. When it doesn't, you don't. The dashboard tracks
-              which rungs have filled and which are pending.
+              <strong>Execute consistently.</strong> When a stock turns
+              ready, you act. When it doesn't, you don't. The dashboard
+              tracks which names are ready and which still need to wait.
             </li>
           </ol>
         </Section>
 
-        <Section title="Why a ladder, not a single price?">
+        <Section title="What the ready-to-invest signal does">
           <p>
-            Nobody knows where a stock is going next. A ladder accepts that.
-            Instead of one all-in entry, you split your planned investment
-            across several price levels — say 5%, 10%, 15%, 20% below
-            today's price.
+            Nobody knows where a stock is going next. The signal accepts
+            that and gives you a single, repeatable rule instead.
           </p>
           <p>
-            If the price drops, you buy more at better levels. If it
-            doesn't, you simply hold what you have. You stop trying to
-            "time the bottom" and replace it with a plan that improves your
-            average price the longer the dip lasts.
+            It's calculated from the stock's most recent peak. Once the
+            price has pulled back by enough, the signal flips on — a blue
+            line on the chart. Until it does, the line stays red and you
+            wait. That's the entire interface: blue is ready, red is wait.
+          </p>
+          <p>
+            The point isn't to predict the bottom. The point is to take the
+            "should I buy here?" question off the table so you can be
+            consistent, week after week, with the same rule.
           </p>
         </Section>
 
@@ -115,10 +119,11 @@ export default function StarterGuidePage() {
           </p>
           <p>
             If you use <strong>Trading 212</strong>, you can optionally
-            connect your account (paper or live). Aurora will pull in your
-            positions so the dashboard shows live data alongside your
-            planned ladders. Your API credentials are encrypted at rest and
-            used in read-only mode by default.
+            connect your account in either <strong>Demo</strong> or{" "}
+            <strong>Live</strong> mode. Aurora will pull in your positions
+            so the dashboard shows live data alongside the signal. Your
+            API credentials are encrypted at rest and used in read-only
+            mode by default — Aurora never places orders for you.
           </p>
         </Section>
 
@@ -133,7 +138,7 @@ export default function StarterGuidePage() {
           />
           <FAQ
             q="Do I need a Trading 212 account?"
-            a="No. The Trading 212 integration is optional. The screening rules, ladders, watchlist and calculator all work without a broker connection."
+            a="No. The Trading 212 integration is optional. The screening rules, signal, watchlist and calculator all work without a broker connection."
           />
           <FAQ
             q="What if I'm a complete beginner?"

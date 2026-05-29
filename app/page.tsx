@@ -41,7 +41,7 @@ function Hero() {
         className="absolute inset-x-0 top-0 h-[90%] pointer-events-none -z-10"
         style={{
           background:
-            "radial-gradient(60% 60% at 50% 30%, rgba(34,211,238,0.10) 0%, rgba(236,72,153,0.06) 45%, rgba(2,6,23,0) 75%)",
+            "radial-gradient(60% 60% at 50% 30%, rgba(59,130,246,0.06) 0%, rgba(236,72,153,0.03) 45%, rgba(2,6,23,0) 75%)",
         }}
       />
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
@@ -148,7 +148,7 @@ function ProblemSolution() {
           <SectionHeader
             eyebrow="The solution"
             title="A repeatable framework for buying, holding and adding"
-            subtitle="Aurora gives you a system: clear screening rules, planned entry ladders, and a dashboard that keeps you focused on the few things that actually matter."
+            subtitle="Aurora gives you a system: clear screening rules, a ready-to-invest signal calculated from the last peak, and a dashboard that keeps you focused on the few things that actually matter."
           />
           <div className="mt-12 grid md:grid-cols-3 gap-5">
             {[
@@ -162,16 +162,16 @@ function ProblemSolution() {
               },
               {
                 n: "02",
-                t: "Plan entries with the Blue Aurora ladder",
-                d: "Pre-define buy zones at staggered prices. You're never left wondering 'should I buy here?'",
-                accent: "#ec4899",
-                wash: "rgba(236,72,153,0.06)",
-                border: "rgba(236,72,153,0.25)",
+                t: "Wait for the ready-to-invest signal",
+                d: "Aurora's signal flags when a stock has pulled back far enough from its last peak to be worth a closer look. No guessing — the rule is the same every time.",
+                accent: "#3b82f6",
+                wash: "rgba(59,130,246,0.06)",
+                border: "rgba(59,130,246,0.25)",
               },
               {
                 n: "03",
                 t: "Stay consistent with one dashboard",
-                d: "Watchlist, positions, calculator and ladders in one place — built so you check it weekly, not hourly.",
+                d: "Watchlist, positions, calculator and signals in one place — built so you check it weekly, not hourly.",
                 accent: "#a78bfa",
                 wash: "rgba(167,139,250,0.06)",
                 border: "rgba(167,139,250,0.25)",
@@ -341,8 +341,7 @@ function BalancedPortfolioSection() {
         </div>
 
         {/* Three principles below the visual — short, practical, no
-            return promises. The middle card uses coral/orange as its
-            accent to anchor the palette point. */}
+            return promises. Palette stops mirror the logo gradient. */}
         <div className="mt-12 grid md:grid-cols-3 gap-5">
           <PrincipleCard
             n="01"
@@ -354,11 +353,11 @@ function BalancedPortfolioSection() {
           />
           <PrincipleCard
             n="02"
-            accent="#fb923c"
-            wash="rgba(251,146,60,0.07)"
-            border="rgba(251,146,60,0.28)"
+            accent="#3b82f6"
+            wash="rgba(59,130,246,0.06)"
+            border="rgba(59,130,246,0.25)"
             title="Cap the biggest position"
-            body="No single name above ~25–30% of the portfolio. Aurora's ladder system makes this natural — you size each position before the prices ever move."
+            body="No single name above ~25–30% of the portfolio. Decide the size before you ever click buy — that's the discipline that keeps a bad call from wrecking the year."
           />
           <PrincipleCard
             n="03"
@@ -366,7 +365,7 @@ function BalancedPortfolioSection() {
             wash="rgba(167,139,250,0.06)"
             border="rgba(167,139,250,0.25)"
             title="Keep cash as a tool"
-            body="A small cash buffer is a feature, not lazy investing. It funds the lower rungs of every ladder if markets drop, which is when planned buying matters most."
+            body="A small cash buffer is a feature, not lazy investing. It's what lets you act when Aurora's ready-to-invest signal fires on a stock you already wanted to own."
           />
         </div>
 
@@ -450,9 +449,9 @@ function ManualAutoSection() {
               className="text-sm leading-relaxed mb-4"
               style={{ color: "var(--text-2)" }}
             >
-              You review Aurora's ladders, decide which rungs to fill, and
-              place trades yourself in your broker. Aurora keeps the plan;
-              you execute it.
+              You review Aurora's signals, decide which ones to act on, and
+              place trades yourself in your broker. Aurora keeps the
+              checklist; you execute it.
             </p>
             <ul
               className="space-y-2 text-sm"
@@ -555,9 +554,10 @@ function ManualAutoSection() {
               style={{ color: "var(--text-2)" }}
             >
               Link your Telegram in one tap and Aurora will send you a
-              message when a ladder rung is hit, an Aurora score changes
-              materially, or your watchlist needs attention. No daily-noise
-              digests — just the events you actually need to know about.
+              message when a stock on your watchlist turns ready-to-invest,
+              when an Aurora score changes materially, or when a position
+              needs attention. No daily-noise digests — just the events
+              you actually need to know about.
             </p>
           </div>
         </div>
@@ -627,9 +627,9 @@ const PLANS: Plan[] = [
     features: [
       "Everything in Core",
       "Watchlist up to 8 stocks",
-      "Blue Aurora ladders",
-      "Trading 212 connection",
-      "Dashboard analytics",
+      "Ready-to-invest signal",
+      "Trading 212 connection (demo + live)",
+      "Telegram alerts",
     ],
     cta: "Get Pro",
   },
@@ -642,7 +642,7 @@ const PLANS: Plan[] = [
     features: [
       "Everything in Pro",
       "Unlimited watchlist",
-      "Profit ladder for live positions",
+      "Position-level signal tracking",
       "Make Investment workflow",
       "Priority support",
     ],

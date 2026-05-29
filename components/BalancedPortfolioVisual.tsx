@@ -31,10 +31,10 @@ const SAMPLES: Sample[] = [
     flavour: "good",
     slices: [
       { label: "Tech", pct: 28, colour: "#22d3ee" },
-      { label: "Consumer", pct: 22, colour: "#fb923c" },
+      { label: "Consumer", pct: 22, colour: "#3b82f6" },
       { label: "Healthcare", pct: 20, colour: "#ec4899" },
       { label: "Finance", pct: 16, colour: "#a78bfa" },
-      { label: "Industrial", pct: 8, colour: "#34d399" },
+      { label: "Industrial", pct: 8, colour: "rgba(255,255,255,0.32)" },
       { label: "Cash", pct: 6, colour: "rgba(255,255,255,0.18)" },
     ],
   },
@@ -47,13 +47,7 @@ const SAMPLES: Sample[] = [
       label: `Holding ${i + 1}`,
       pct: 5,
       // Cycle through the logo palette so the bar reads as a borealis.
-      colour: [
-        "#22d3ee",
-        "#fb923c",
-        "#ec4899",
-        "#a78bfa",
-        "#34d399",
-      ][i % 5],
+      colour: ["#22d3ee", "#3b82f6", "#ec4899", "#a78bfa"][i % 4],
     })),
   },
 ];
@@ -71,13 +65,13 @@ export default function BalancedPortfolioVisual() {
 function SampleCard({ sample }: { sample: Sample }) {
   const borderColour =
     sample.flavour === "good"
-      ? "rgba(251,146,60,0.32)"
+      ? "rgba(59,130,246,0.32)"
       : sample.flavour === "danger"
         ? "rgba(251,113,133,0.28)"
         : "var(--border)";
   const labelColour =
     sample.flavour === "good"
-      ? "#fbbf24"
+      ? "#3b82f6"
       : sample.flavour === "danger"
         ? "#fb7185"
         : "var(--text-3)";
@@ -88,7 +82,7 @@ function SampleCard({ sample }: { sample: Sample }) {
       style={{
         background:
           sample.flavour === "good"
-            ? "linear-gradient(180deg, rgba(251,146,60,0.06) 0%, rgba(2,6,23,0) 70%)"
+            ? "linear-gradient(180deg, rgba(59,130,246,0.06) 0%, rgba(2,6,23,0) 70%)"
             : "var(--bg-card)",
         borderColor: borderColour,
       }}

@@ -4,7 +4,7 @@
 // CSS+SVG mock-ups, each framed inside a "browser chrome" so they
 // feel like real screenshots. Three scenes:
 //
-//   1. Main dashboard     — sidebar, watchlist, ladders, portfolio
+//   1. Main dashboard     — sidebar, watchlist, signal status, portfolio
 //   2. Market Scanner     — Aurora-scored stock list with filters
 //   3. Calculator         — the dashboard's in-app compound tool
 //
@@ -68,7 +68,7 @@ function TourFrame({
       <div className={`lg:col-span-4 ${copyOrder}`}>
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em] mb-3"
-          style={{ color: "var(--accent-coral)" }}
+          style={{ color: "var(--accent-blue)" }}
         >
           {eyebrow}
         </p>
@@ -300,7 +300,7 @@ function DashboardScene() {
             </p>
             {[
               { l: "Tech", v: 32, c: "#22d3ee" },
-              { l: "Consumer", v: 22, c: "#fb923c" },
+              { l: "Consumer", v: 22, c: "#3b82f6" },
               { l: "Health", v: 18, c: "#ec4899" },
               { l: "Finance", v: 14, c: "#a78bfa" },
               { l: "Cash", v: 14, c: "rgba(255,255,255,0.2)" },
@@ -359,7 +359,7 @@ function DashboardScene() {
             </div>
             <div className="space-y-1.5 mt-2">
               {[
-                { t: "NVDA hit ladder rung 2 (-10%)", h: "07:42" },
+                { t: "NVDA signal turned ready", h: "07:42" },
                 { t: "MSFT Aurora score rose to 91", h: "Yesterday" },
                 { t: "Watchlist export sent to Telegram", h: "Yesterday" },
               ].map((a) => (
@@ -450,7 +450,10 @@ function DashboardScene() {
             </div>
           </div>
 
-          {/* Ladder tile */}
+          {/* Ready-to-invest signal tile — placeholder until the
+              Pine Script is wired in. Each row shows a watchlist
+              stock plus the simple blue/red signal status
+              (ready / not yet) calculated from the last peak. */}
           <div
             className="col-span-5 rounded-xl border p-4"
             style={{
@@ -459,65 +462,60 @@ function DashboardScene() {
             }}
           >
             <div className="flex items-center justify-between mb-2">
-              <div>
-                <p
-                  className="text-[10px] uppercase tracking-[0.18em] font-bold"
-                  style={{ color: "var(--text-3)" }}
-                >
-                  Blue Aurora Ladder — NVDA
-                </p>
-              </div>
-              <span
-                className="text-[10px] font-mono"
+              <p
+                className="text-[10px] uppercase tracking-[0.18em] font-bold"
                 style={{ color: "var(--text-3)" }}
               >
-                50% deployed
+                Ready-to-invest signal
+              </p>
+              <span
+                className="text-[10px]"
+                style={{ color: "var(--text-3)" }}
+              >
+                from last peak
               </span>
             </div>
             <div className="space-y-1.5">
               {[
-                { pct: 0, price: 184.5, filled: true, alloc: 25 },
-                { pct: -5, price: 175.27, filled: true, alloc: 25 },
-                { pct: -10, price: 166.05, filled: false, alloc: 20 },
-                { pct: -15, price: 156.82, filled: false, alloc: 15 },
-                { pct: -20, price: 147.6, filled: false, alloc: 15 },
-              ].map((r, i) => (
-                <div key={i} className="flex items-center gap-1.5">
+                { t: "NVDA", pct: -22, ready: true },
+                { t: "ASML", pct: -18, ready: true },
+                { t: "GOOG", pct: -11, ready: false },
+                { t: "MSFT", pct: -6, ready: false },
+                { t: "V", pct: -3, ready: false },
+              ].map((r) => (
+                <div
+                  key={r.t}
+                  className="flex items-center gap-2 px-2 py-1.5 rounded"
+                  style={{ background: "rgba(255,255,255,0.02)" }}
+                >
+                  {/* Status dot — blue = ready, red = not yet.
+                      Mirrors the line colours the Pine Script will draw
+                      on the chart so the language stays consistent. */}
                   <span
-                    className="text-[9px] font-mono w-7"
+                    className="inline-block w-2 h-2 rounded-full"
+                    style={{
+                      background: r.ready ? "#3b82f6" : "#fb7185",
+                      boxShadow: `0 0 6px ${r.ready ? "#3b82f6" : "#fb7185"}`,
+                    }}
+                    aria-hidden
+                  />
+                  <span className="text-white text-[11px] font-bold w-12">
+                    {r.t}
+                  </span>
+                  <span
+                    className="text-[10px] font-mono flex-1"
                     style={{ color: "var(--text-3)" }}
                   >
-                    {r.pct === 0 ? "Now" : `${r.pct}%`}
+                    {r.pct}% from peak
                   </span>
-                  <div
-                    className="flex-1 h-4 rounded relative overflow-hidden"
+                  <span
+                    className="text-[10px] font-bold"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: `1px solid ${
-                        r.filled
-                          ? "rgba(34,211,238,0.4)"
-                          : "rgba(255,255,255,0.08)"
-                      }`,
+                      color: r.ready ? "#3b82f6" : "var(--text-3)",
                     }}
                   >
-                    <div
-                      className="absolute inset-y-0 left-0"
-                      style={{
-                        width: r.filled ? "100%" : "0%",
-                        background:
-                          "linear-gradient(90deg, rgba(34,211,238,0.35), rgba(236,72,153,0.25))",
-                      }}
-                    />
-                    <span
-                      className="absolute inset-0 flex items-center justify-between px-1.5 text-[9px] font-mono"
-                      style={{
-                        color: r.filled ? "#fff" : "var(--text-3)",
-                      }}
-                    >
-                      <span>${r.price.toFixed(2)}</span>
-                      <span>{r.alloc}%</span>
-                    </span>
-                  </div>
+                    {r.ready ? "Ready" : "Wait"}
+                  </span>
                 </div>
               ))}
             </div>
@@ -628,7 +626,7 @@ function ScannerScene() {
                 </span>
                 <span style={{ color: "var(--text-3)" }}>{r.sec}</span>
                 <MiniBar value={r.q} colour="#22d3ee" />
-                <MiniBar value={r.g} colour="#fb923c" />
+                <MiniBar value={r.g} colour="#3b82f6" />
                 <MiniBar value={r.v} colour="#a78bfa" />
                 <span
                   className="text-right font-bold rounded px-1.5 py-0.5 inline-block w-fit ml-auto"
@@ -725,7 +723,7 @@ function CalculatorScene() {
                     style={{
                       width: `${f.slider}%`,
                       background:
-                        "linear-gradient(90deg,#22d3ee,#fb923c,#ec4899,#a78bfa)",
+                        "linear-gradient(90deg,#22d3ee,#3b82f6,#ec4899,#a78bfa)",
                     }}
                   />
                 </div>
@@ -773,7 +771,7 @@ function CalculatorScene() {
                 className="text-3xl font-extrabold mt-1"
                 style={{
                   background:
-                    "linear-gradient(90deg,#22d3ee 0%,#fb923c 35%,#ec4899 65%,#a78bfa 100%)",
+                    "linear-gradient(90deg,#22d3ee 0%,#3b82f6 35%,#ec4899 70%,#a78bfa 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
@@ -805,8 +803,8 @@ function CalculatorScene() {
                 <defs>
                   <linearGradient id="cs1" x1="0" x2="1" y1="0" y2="0">
                     <stop offset="0%" stopColor="#22d3ee" />
-                    <stop offset="35%" stopColor="#fb923c" />
-                    <stop offset="65%" stopColor="#ec4899" />
+                    <stop offset="35%" stopColor="#3b82f6" />
+                    <stop offset="70%" stopColor="#ec4899" />
                     <stop offset="100%" stopColor="#a78bfa" />
                   </linearGradient>
                   <linearGradient id="cf1" x1="0" x2="0" y1="0" y2="1">

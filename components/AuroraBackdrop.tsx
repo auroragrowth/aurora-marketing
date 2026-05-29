@@ -1,8 +1,8 @@
 // Aurora Borealis ambient backdrop.
 // Four blurred, slowly-drifting colour layers in screen blend mode
 // stack to produce a flowing northern-lights effect across the full
-// logo palette (cyan / coral / pink / violet). Implementation lives
-// in globals.css (.aurora-wrap + .aurora-a/b/c/d) so the React
+// logo palette (turquoise / blue / pink / purple). Implementation
+// lives in globals.css (.aurora-wrap + .aurora-a/b/c/d) so the React
 // surface stays tiny and the animation never re-renders.
 //
 //   intensity="hero"     loud version behind the homepage hero.
