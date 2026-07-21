@@ -41,17 +41,21 @@ export default function FinvizWatchlistPage() {
           stored or sent anywhere.
         </p>
 
-        <div
-          className="mt-8 rounded-xl border p-5 sm:p-6"
+        <details
+          className="group mt-8 rounded-xl border"
           style={{ borderColor: "var(--border-cyan)", background: "var(--bg-card)" }}
         >
-          <p
-            className="text-xs font-bold uppercase tracking-[0.14em] mb-4"
+          <summary
+            className="flex cursor-pointer list-none select-none items-center gap-2 p-5 sm:p-6 text-xs font-bold uppercase tracking-[0.14em] [&::-webkit-details-marker]:hidden"
             style={{ color: "var(--accent-cyan)" }}
           >
+            <span className="inline-block transition-transform duration-150 group-open:rotate-90">▸</span>
             How it works
-          </p>
-          <ol className="space-y-3 text-[15px] leading-relaxed" style={{ color: "var(--text-2)" }}>
+          </summary>
+          <ol
+            className="space-y-3 px-5 pb-5 sm:px-6 sm:pb-6 text-[15px] leading-relaxed"
+            style={{ color: "var(--text-2)" }}
+          >
             <li>
               <span className="text-white font-semibold">1. Open your screen on Finviz</span>{" "}
               &mdash; use an <em>Open in Finviz</em> link in the tool, or your own saved screen.
@@ -74,7 +78,7 @@ export default function FinvizWatchlistPage() {
               ticker lands at once &mdash; no file to upload.
             </li>
           </ol>
-        </div>
+        </details>
 
         <p className="mt-5 text-xs" style={{ color: "var(--text-2)" }}>
           A simple utility that moves tickers between two apps &mdash; educational only, and not
