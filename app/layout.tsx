@@ -4,6 +4,7 @@ import AuroraBackdrop from "@/components/AuroraBackdrop";
 import FCAFooter from "@/components/FCAFooter";
 import FloatingParticles from "@/components/FloatingParticles";
 import SiteHeader from "@/components/SiteHeader";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Aurora Growth Academy — Investing with structure, not noise",
@@ -38,6 +39,7 @@ export default function RootLayout({
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <FCAFooter />
+        <Analytics />
       </body>
     </html>
   );
