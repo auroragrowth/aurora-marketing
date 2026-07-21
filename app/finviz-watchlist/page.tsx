@@ -87,7 +87,7 @@ export default function FinvizWatchlistPage() {
       </section>
 
       <iframe
-        src="https://auroragrowth.github.io/finviz-tradingview/"
+        src="https://auroragrowth.github.io/finviz-tradingview/?embed=1"
         title="Finviz to TradingView Watchlist Tool"
         style={{
           display: "block",
